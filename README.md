@@ -6,10 +6,10 @@ Fetch details of user using GitHub API
 
 1. Open PowerShell as Administrator
 2. Go to the directory where you have your code for this project
-    cd <directory address>
+cd <directory address>
 3. Type the following commands in the powerShell terminal:
-    python -m pip install --upgrade pip
-    pip install requests rich python-dotenv
+python -m pip install --upgrade pip
+pip install requests rich python-dotenv
 
 ## Features
 
@@ -22,9 +22,9 @@ Fetch details of user using GitHub API
 ## How to View Individual User Details
 
 To fetch and display details of a single GitHub user, run:
-    python main.py <username>
+python main.py <username>
 
 ## How to Compare Details of two users
 
 To fetch, display and compare details of two single GitHub users, run:
-    python main.py <username1> --compare <username2>
+python main.py <username1> --compare <username2>
