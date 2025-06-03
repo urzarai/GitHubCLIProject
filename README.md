@@ -38,4 +38,6 @@ python main.py <username>
 ### Compare Details of two users
 
 To fetch, display and compare details of two single GitHub users, run:
+```bash
 python main.py <username1> --compare <username2>
+```
