@@ -2,9 +2,10 @@ import argparse
 from github_api import (
     get_user_data,
     get_user_repos,
-    get_starred_repos
+    get_starred_repos,
+    get_user_events
 )
-from ui_renderer import display_user_overview
+from ui_renderer import display_user_overview, display_repo_commits
 from comparator import compare_users
 
 def main():
@@ -19,8 +20,13 @@ def main():
         user1_data = get_user_data(args.username)
         user1_repos = get_user_repos(args.username)
         user1_starred = get_starred_repos(args.username)
+        user1_events = get_user_events(args.username)
+
         # Display single user info
         display_user_overview(user1_data, user1_repos, user1_starred)
+
+        # Display recent commits (from push events)
+        display_repo_commits(user1_events)
     else:
         # Fetch data for both users and compare
         user1_data = get_user_data(args.username)

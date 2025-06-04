@@ -1,5 +1,7 @@
 from rich.console import Console
 from rich.table import Table
+from collections import defaultdict
+from util import format_date
 
 console = Console()
 
@@ -17,8 +19,23 @@ def display_user_overview(user_data, repos, starred):
 
     console.print(table)
 
-def display_repo_commits(commits_dict):
-    for repo, commits in commits_dict.items():
+def display_repo_commits(events):
+    """Display recent push event commits from user's public activity"""
+    repo_commits = defaultdict(list)
+
+    for event in events:
+        if event["type"] == "PushEvent":
+            repo_name = event["repo"]["name"]
+            for commit in event["payload"]["commits"]:
+                message = commit.get("message", "No message")
+                timestamp = format_date(event["created_at"])
+                repo_commits[repo_name].append((message, timestamp))
+
+    if not repo_commits:
+        console.print("\n[bold yellow]No recent commits found.[/bold yellow]")
+        return
+
+    for repo, commits in repo_commits.items():
         console.rule(f"[bold green]{repo} - Recent Commits")
-        for commit in commits:
-            console.print(f"[blue]{commit['commit']['message']}[/blue]")
+        for msg, time in commits:
+            console.print(f"[blue]{msg}[/blue] [dim]({time})[/dim]")
